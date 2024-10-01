@@ -9,13 +9,28 @@ import SwiftUI
 
 struct SwiftUIViewDetallesList: View {
     var persona: Person
+    
+    //valor publico que repinta vista a partir de una vista padre a una hija
+    @Binding var favorito : Bool
     var body: some View {
         VStack {
             persona.perfil
                 .resizable()
                 .frame(width: 200,height: 200)
                 .shadow(radius: 5)
-            Text(persona.nombre).font(.largeTitle)
+            HStack {
+                Text(persona.nombre).font(.largeTitle)
+                Button {
+                    favorito.toggle()
+                } label: {
+                    if favorito {
+                        Image(systemName: "star.fill").foregroundColor(.yellow)
+                    }
+                    else {
+                        Image(systemName: "star").foregroundColor(.black)
+                    }
+                }
+            }
             Text(persona.edad).font(.title)
             Text(persona.ciudad).font(.title)
         }
@@ -25,5 +40,5 @@ struct SwiftUIViewDetallesList: View {
 }
 
 #Preview {
-    SwiftUIViewDetallesList(persona: Person(id: 0, nombre: "jesis", edad: "28", perfil: Image(systemName: "circle"), ciudad: "villa", status: true))
+    SwiftUIViewDetallesList(persona: Person(id: 0, nombre: "jesis", edad: "28", perfil: Image(systemName: "circle"), ciudad: "villa", status: true), favorito: .constant(false))
 }
